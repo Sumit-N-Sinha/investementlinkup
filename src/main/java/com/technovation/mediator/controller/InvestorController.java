@@ -58,7 +58,6 @@ public class InvestorController {
 		try {
 			return new ResponseEntity(iserv.updateInvestor(pr, id), HttpStatus.OK);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			return new ResponseEntity(e.getMessage(), HttpStatus.OK);
 		}
 	}
@@ -68,7 +67,6 @@ public class InvestorController {
 		try {
 			return new ResponseEntity(iserv.removeInvestor(id), HttpStatus.OK);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			return new ResponseEntity(e.getMessage(), HttpStatus.OK);
 		}
 	}
