@@ -15,4 +15,5 @@ public interface UserServ {
 	List<User> findAll();
 	ResponseEntity<User> login(String email, String password);
 	User getCurrentUser();
+	User logOut();
 }

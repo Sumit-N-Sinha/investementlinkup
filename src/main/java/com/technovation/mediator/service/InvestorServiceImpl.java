@@ -2,11 +2,19 @@ package com.technovation.mediator.service;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.technovation.mediator.controller.UserControl;
+import com.technovation.mediator.dto.InvestorDTO;
 import com.technovation.mediator.entity.Investor;
+import com.technovation.mediator.entity.StartsUp;
+import com.technovation.mediator.entity.User;
+import com.technovation.mediator.entity.UserRole;
 import com.technovation.mediator.repository.InvestorRepository;
+
 
 @Service
 public class InvestorServiceImpl implements Investorservice {
@@ -14,9 +22,28 @@ public class InvestorServiceImpl implements Investorservice {
 	@Autowired
 	private InvestorRepository invRepo;
 	
+	@Autowired
+	private UserControl userControl;
+	
+	private User user;
+	
 	@Override
-	public Investor addInvestor(Investor inv) {
-		return invRepo.save(inv);
+	public Investor addInvestor(InvestorDTO pr) throws Exception {
+		user = userControl.getCurrentUser();
+		if(user.getUserRole().compareTo(UserRole.INVESTOR)==0) {
+			Investor inv = new Investor();
+			inv.getInvId();
+			inv.setAmountInvested(pr.getAmountInvested());
+			inv.setEmail(pr.getEmail());
+			inv.setFirstName(pr.getFirstName());
+			inv.setLastName(pr.getLastName());
+			inv.setIndustry(pr.getIndustry());
+			inv.setStartUpsInvested(pr.getStartUpsInvested());
+			inv.getUser();
+			return invRepo.save(inv);			
+		}else {
+			throw new Exception("Invalid User");
+		}
 	}
 
 	@Override
@@ -62,13 +89,21 @@ public class InvestorServiceImpl implements Investorservice {
 
 	@Override
 	public List<Investor> viewAllInvestors() throws Exception {
-		List l1 = (List<Investor>) invRepo.findAll();
-		if(l1.isEmpty()) {
-			throw new Exception("List is Empty. Add new Products.");
+		user = userControl.getCurrentUser();				//get current user
+		if(user.getUserRole().compareTo(UserRole.INVESTOR)==0) {		//checking the condition
+			List<Investor> l1 = invRepo.findAll();
+			if(l1.isEmpty()) {
+				throw new Exception("List is Empty. Add new Products.");
+			}
+			else {
+				return l1;
+			}
+		}else {
+			throw new Exception("Invalid User");
 		}
-		else {
-			return l1;
-		}
+		
+		
+		
 	}
 
 }

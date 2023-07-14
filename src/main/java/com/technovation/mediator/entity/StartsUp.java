@@ -1,9 +1,12 @@
 package com.technovation.mediator.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 import lombok.Data;
 
@@ -24,5 +27,9 @@ public class StartsUp {
 	private Double totalValuation;
 	private String services;
 	private String description;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="id")
+	private User user;
    
 }

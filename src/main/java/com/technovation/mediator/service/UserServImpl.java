@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.technovation.mediator.entity.User;
+import com.technovation.mediator.entity.UserRole;
 import com.technovation.mediator.repository.UserRepository;
 
 @Service
@@ -65,5 +66,14 @@ public class UserServImpl implements UserServ{
 	
 	public User getCurrentUser() {
 		return userRepository.findByEmailId(s);
+	}
+
+	@Override
+	public User logOut() {
+		if(this.getCurrentUser()!=userRepository.findByUserRole(UserRole.DEFAULT)) {
+			s = userRepository.findByUserRole(UserRole.DEFAULT).getEmailId();
+			
+		}
+		return userRepository.findByUserRole(UserRole.DEFAULT);
 	}
 }

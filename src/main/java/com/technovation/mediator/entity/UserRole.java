@@ -1,6 +1,5 @@
 package com.technovation.mediator.entity;
 
 public enum UserRole {
-	INVESTOR,STARTUP;
-
+	INVESTOR,STARTUP,DEFAULT;
 }
