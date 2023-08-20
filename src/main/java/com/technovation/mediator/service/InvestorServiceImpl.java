@@ -36,10 +36,9 @@ public class InvestorServiceImpl implements Investorservice {
 			inv.setAmountInvested(pr.getAmountInvested());
 			inv.setEmail(pr.getEmail());
 			inv.setFirstName(pr.getFirstName());
-			inv.setLastName(pr.getLastName());
 			inv.setIndustry(pr.getIndustry());
 			inv.setStartUpsInvested(pr.getStartUpsInvested());
-			inv.getUser();
+			inv.setUser(userControl.getCurrentUser());
 			return invRepo.save(inv);			
 		}else {
 			throw new Exception("Invalid User");
@@ -52,7 +51,6 @@ public class InvestorServiceImpl implements Investorservice {
 		if (invRepo.existsById(id)) {
 			inves = invRepo.findById(id).get();
 			inves.setFirstName(inv.getFirstName());
-			inves.setLastName(inv.getLastName());
 			inves.setEmail(inv.getEmail());
 			inves.setIndustry(inv.getIndustry());
 			inves.setStartUpsInvested(inv.getStartUpsInvested());
@@ -90,7 +88,7 @@ public class InvestorServiceImpl implements Investorservice {
 	@Override
 	public List<Investor> viewAllInvestors() throws Exception {
 		user = userControl.getCurrentUser();				//get current user
-		if(user.getUserRole().compareTo(UserRole.INVESTOR)==0) {		//checking the condition
+		if(user.getUserRole().compareTo(UserRole.STARTUP)==0) {		//checking the condition
 			List<Investor> l1 = invRepo.findAll();
 			if(l1.isEmpty()) {
 				throw new Exception("List is Empty. Add new Products.");
@@ -104,6 +102,12 @@ public class InvestorServiceImpl implements Investorservice {
 		
 		
 		
+	}
+
+	public List<Investor> findByName(String firstName) {
+		user = userControl.getCurrentUser();
+		
+		return null;
 	}
 
 }

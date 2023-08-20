@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.technovation.mediator.dto.InvestorDTO;
 import com.technovation.mediator.entity.Investor;
 import com.technovation.mediator.service.InvestorServiceImpl;
+import com.technovation.mediator.service.Investorservice;
 
 @RestController
 @RequestMapping("/api/v1/")
@@ -25,7 +27,7 @@ import com.technovation.mediator.service.InvestorServiceImpl;
 public class InvestorController {
 
 	@Autowired
-	private InvestorServiceImpl iserv;
+	private Investorservice iserv;
 
 	@GetMapping("investor/{id}")
 	public ResponseEntity<?> getInvestor(@PathVariable Integer id) {
@@ -45,9 +47,14 @@ public class InvestorController {
 
 		}
 	}
+	
+	@GetMapping("/investor/getByName/")
+	public ResponseEntity<?> getInvestorByNamed(@RequestParam String firstName){
+		return new ResponseEntity<>(iserv.findByName(firstName),HttpStatus.ACCEPTED);
+	}
 
 	@PostMapping("investor")
-	public Object addInvestor(@Valid @RequestBody InvestorDTO pr) {
+	public Object addInvestor(@RequestBody InvestorDTO pr) {
 		try {
 			iserv.addInvestor(pr);
 			return new ResponseEntity<>("Investor profile Added! \n" + pr.toString(), HttpStatus.OK);

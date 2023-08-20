@@ -17,4 +17,6 @@ public interface StartupService {
 
 	StartsUp createNew(@Valid StartUpDTO startsUp) throws Exception;
 
+	StartsUp findbyName(String founderName) throws Exception;
+
 }

@@ -6,7 +6,6 @@ import lombok.Data;
 public class InvestorDTO {
 
 	private String firstName;
-	private String lastName;
 	private String email;
 	private String industry;
 	private Integer startUpsInvested;	

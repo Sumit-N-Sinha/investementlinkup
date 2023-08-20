@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.technovation.mediator.dto.StartUpDTO;
@@ -34,6 +35,11 @@ public class StartupController {
 	@GetMapping("/startup/{id}")
 	public ResponseEntity<StartsUp> getStartUpById(@PathVariable Integer id) throws Exception{
 		return new ResponseEntity<>(startupService.findById(id),HttpStatus.ACCEPTED);
+	}
+	
+	@GetMapping("/startup/getByName/")
+	public ResponseEntity<StartsUp> getStartUpByName(@RequestParam String founderName) throws Exception{
+		return new ResponseEntity<>(startupService.findbyName(founderName),HttpStatus.ACCEPTED);
 	}
 	
 	@DeleteMapping("/startup/delete/{id}")

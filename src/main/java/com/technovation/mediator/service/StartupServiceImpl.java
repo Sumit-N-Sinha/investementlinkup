@@ -75,11 +75,11 @@ public class StartupServiceImpl implements StartupService {
 	@Override
 	public StartsUp createNew(@Valid StartUpDTO startsUp) throws Exception {
 		user = userControl.getCurrentUser();
-		if(user.getUserRole().compareTo(UserRole.STARTUP)==0 && user.getName().equals(startsUp.getFounderName())) {
+		if(user.getUserRole().compareTo(UserRole.STARTUP)==0 ) {
 			if(startsUpRepository.findByCompanyEmail(startsUp.getCompanyEmail())==null) {
 				StartsUp st = new StartsUp();
 				st.getStartId();
-				st.setFounderName(startsUp.getFounderName());
+				st.setFounderName(user.getName());
 				st.setCompanyEmail(startsUp.getCompanyEmail());
 				st.setCompanyName(startsUp.getCompanyName());
 				st.setDescription(startsUp.getDescription());
@@ -87,10 +87,26 @@ public class StartupServiceImpl implements StartupService {
 				st.setLocation(startsUp.getLocation());
 				st.setServices(startsUp.getServices());
 				st.setTotalValuation(startsUp.getTotalValuation());
-				st.setUser(userRepository.findByName(startsUp.getFounderName()));
+				st.setUser(userRepository.findByName(user.getName()));
 				return startsUpRepository.save(st);
 			}else {
 				throw new Exception("Already Registered...");
+			}
+		}else {
+			throw new Exception("Invalid User");
+		}
+	}
+
+	@Override
+	public StartsUp findbyName(String name) throws Exception {
+		user = userControl.getCurrentUser();
+		if(user.getUserRole().compareTo(UserRole.STARTUP)==0) {
+			StartsUp st = new StartsUp();
+			st = startsUpRepository.findByFounderName(name).get();
+			if(user.getName().equals(st.getFounderName())){
+				return startsUpRepository.findByFounderName(name).get();
+			}else {
+				throw new Exception("Not Authorized");
 			}
 		}else {
 			throw new Exception("Invalid User");

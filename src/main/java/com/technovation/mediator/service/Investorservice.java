@@ -12,4 +12,5 @@ public interface Investorservice {
     String removeInvestor(Integer id) throws Exception;
 	List<Investor> viewAllInvestors() throws Exception;
 	Investor viewInvestorById(Integer id) throws Exception;
+	List<Investor> findByName(String firstName);
 }

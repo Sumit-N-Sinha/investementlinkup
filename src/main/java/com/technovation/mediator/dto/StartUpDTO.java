@@ -6,7 +6,7 @@ import lombok.Data;
 public class StartUpDTO {
 
 	private String companyName;
-	private String founderName;
+//	private String founderName;
 	private String location;
 	private String industryType;
 	private String companyEmail;
